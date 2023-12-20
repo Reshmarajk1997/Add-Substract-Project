@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <title>Document</title>
+  </head>
+  <body
+    class="d-flex justify-content-center align-items-center vh-100 bg-warning"
+  >
+    <div class="text-center">
+      <button id="add"  class="btn btn-primary btn-lg text-center mt-5">
+        +
+      </button>
+      <h1 id="value" class="text-primary mt-5"><%=numbVal%></h1>
+
+      <button id="substarct" class="btn btn-primary btn-lg mt-5">-</button>
+    </div>
+
+    <script>
+      
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("add")
+          .addEventListener("click", async function () {
+            let d = await adddata();
+            document.getElementById("value").innerText = d;
+          });
+
+        async function adddata() {
+          try {
+            const response = await fetch("/add", {
+              method: "post",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ }),
+            });
+            const data = await response.json();
+            console.log("Updated value:", data.updatedValue);
+
+            return data.updatedValue;
+            
+          } catch (error) {
+            console.log(error);
+          }
+          
+        }
+
+        document
+          .getElementById("substarct")
+          .addEventListener("click", async function () {
+            let d = await subtractData();
+            document.getElementById("value").innerText = d;
+          });
+
+        async function subtractData() {
+          try {
+            const response = await fetch("/sub", {
+              method: "post",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ }),
+            });
+            const data = await response.json();
+            console.log("Updated value:", data.updatedValue);
+
+            return data.updatedValue;
+            
+          } catch (error) {
+            console.log(error);
+          }
+          
+        }
+
+      });
+      
+
+    </script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
